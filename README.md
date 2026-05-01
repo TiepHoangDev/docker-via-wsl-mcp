@@ -1,18 +1,57 @@
 # docker-via-wsl MCP
 
-MCP server that exposes full Docker CLI functionality to AI agents by proxying commands through WSL (Windows Subsystem for Linux).
+[![npm version](https://img.shields.io/npm/v/docker-via-wsl-mcp)](https://www.npmjs.com/package/docker-via-wsl-mcp)
+[![license](https://img.shields.io/npm/l/docker-via-wsl-mcp)](LICENSE)
+
+MCP server that exposes full Docker CLI functionality (37 tools) to AI agents by proxying commands through WSL (Windows Subsystem for Linux).
 
 ## Requirements
 
 - Windows with WSL2 installed
 - Docker installed inside WSL (Ubuntu or any distro)
-- Node.js 18+ (on Windows)
+- Node.js 18+ on Windows
 
-## Setup
+## Quick Start
+
+No installation needed. Just add to your MCP client config and it runs via `npx` automatically.
+
+## MCP Client Config
+
+### Windsurf / Cursor — recommended
+
+```json
+{
+  "mcpServers": {
+    "docker-via-wsl": {
+      "command": "npx",
+      "args": ["-y", "docker-via-wsl-mcp"],
+      "env": {
+        "WSL_DISTRO": "Ubuntu"
+      }
+    }
+  }
+}
+```
+
+> Run `wsl -l` to find your distro name if it's not `Ubuntu`.
+
+### Alternative — global install
 
 ```bash
-npm install
-npm run build
+npm install -g docker-via-wsl-mcp
+```
+
+```json
+{
+  "mcpServers": {
+    "docker-via-wsl": {
+      "command": "docker-via-wsl-mcp",
+      "env": {
+        "WSL_DISTRO": "Ubuntu"
+      }
+    }
+  }
+}
 ```
 
 ## Configuration
@@ -32,45 +71,6 @@ Config is loaded from environment variables first, then `config.json` (in projec
   "wslDistro": "Ubuntu",
   "dockerPath": "docker",
   "cmdTimeoutMs": 30000
-}
-```
-
-## MCP Client Config
-
-### Windsurf / Cursor — recommended (via npx, no clone needed)
-
-```json
-{
-  "mcpServers": {
-    "docker-via-wsl": {
-      "command": "npx",
-      "args": ["-y", "docker-via-wsl-mcp"],
-      "env": {
-        "WSL_DISTRO": "Ubuntu"
-      }
-    }
-  }
-}
-```
-
-> Change `WSL_DISTRO` to match your WSL distro name (run `wsl -l` to list them).
-
-### Alternative — global install
-
-```bash
-npm install -g docker-via-wsl-mcp
-```
-
-```json
-{
-  "mcpServers": {
-    "docker-via-wsl": {
-      "command": "docker-via-wsl-mcp",
-      "env": {
-        "WSL_DISTRO": "Ubuntu"
-      }
-    }
-  }
 }
 ```
 
@@ -148,3 +148,13 @@ npm install -g docker-via-wsl-mcp
 - **WSL paths**: For `docker_build`, `docker_compose_*` — provide Linux-style paths (e.g. `/home/user/app`, not `C:\...`)
 - **Timeouts**: Long operations like `docker_build` or `docker_compose_up` may need a higher `CMD_TIMEOUT_MS`
 - **Non-interactive**: `docker_exec` runs non-interactively; avoid commands that require a TTY
+
+## Development
+
+```bash
+git clone https://github.com/TiepHoangDev/docker-via-wsl-mcp.git
+cd docker-via-wsl-mcp
+npm install
+npm run build
+node test.mjs   # smoke test against your local Docker/WSL
+```
