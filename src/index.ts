@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
@@ -39,7 +40,7 @@ const server = new Server(
     capabilities: {
       tools: {},
     },
-  }
+  },
 );
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
@@ -79,6 +80,8 @@ async function main() {
 }
 
 main().catch((err) => {
-  process.stderr.write(`Fatal error: ${err instanceof Error ? err.message : String(err)}\n`);
+  process.stderr.write(
+    `Fatal error: ${err instanceof Error ? err.message : String(err)}\n`,
+  );
   process.exit(1);
 });

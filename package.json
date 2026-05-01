@@ -4,10 +4,33 @@
   "description": "MCP server exposing full Docker CLI via WSL for AI agents",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "docker-via-wsl-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "mcp",
+    "docker",
+    "wsl",
+    "model-context-protocol",
+    "ai",
+    "devtools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TiepHoangDev/docker-via-wsl-mcp.git"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.0"
