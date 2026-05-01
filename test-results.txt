@@ -1,0 +1,61 @@
+docker-via-wsl MCP — Full Test Results
+============================================================
+PASS: 28  FAIL: 0  SKIP: 4  TOTAL: 32
+============================================================
+
+
+[SYSTEM]
+  ✓ docker_version                      PASS  Client: Docker Engine - Community
+ Version:           29.4.0
+ API version:       1.54
+ Go version:        go1.26.1
+ Git commit:        9d7ad9f
+ Built:             Tue Apr  7 08:36:07 2026
+ OS/Arch:   
+  ✓ docker_info                         PASS  29.4.0
+  ✓ docker_system_df                    PASS  TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          11        2         20.19GB   6.242GB (30%)
+Containers      2         0         12.29kB   12.29kB (100%)
+Local Volumes   7    
+
+[CONTAINERS]
+  ✓ docker_ps (all)                     PASS  CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS                       PORTS     NAMES
+de7506964678   ubuntu:latest   "sleep 30"               3 minutes ago   Exited (255
+  ✓ docker_run                          PASS  661486275f1ed52dd9cbb993d0417d925b8d8bcfc4ff9d5f535f98b05a09d855
+  ✓ docker_exec                         PASS  hello-from-exec
+  ✓ docker_ps (filter)                  PASS  mcp-test
+  ✓ docker_logs                         PASS  (no output)
+  ✓ docker_inspect                      PASS  /mcp-test
+  ✓ docker_stop                         PASS  mcp-test
+  ✓ docker_start                        PASS  mcp-test
+  ✓ docker_restart                      PASS  mcp-test
+  ✓ docker_rm                           PASS  mcp-test
+
+[IMAGES]
+  ✓ docker_images                       PASS  IMAGE                                        ID             DISK USAGE   CONTENT SIZE   EXTRA
+  ✓ docker_image_inspect                PASS  linux/amd64
+  ✓ docker_tag                          PASS  (no output)
+  ✓ docker_rmi                          PASS  Untagged: ubuntu:mcp-test-tag
+  ✓ docker_pull                         PASS  latest: Pulling from library/hello-world
+  ~ docker_push                         SKIP  requires registry auth
+  ~ docker_build                        SKIP  requires WSL Dockerfile path
+
+[NETWORKS]
+  ✓ docker_network_ls                   PASS  NETWORK ID     NAME                      DRIVER    SCOPE
+  ✓ docker_network_create               PASS  94d8c1262b1d8ab52343
+  ✓ docker_network_inspect              PASS  mcp-test-net2
+  ✓ docker_network_connect              PASS  (no output)
+  ✓ docker_network_disconnect           PASS  (no output)
+  ✓ docker_network_rm                   PASS  mcp-test-net2
+
+[VOLUMES]
+  ✓ docker_volume_ls                    PASS  DRIVER    VOLUME NAME
+  ✓ docker_volume_create                PASS  mcp-test-vol2
+  ✓ docker_volume_inspect               PASS  mcp-test-vol2
+  ✓ docker_volume_rm                    PASS  mcp-test-vol2
+
+[COMPOSE]
+  ~ docker_compose_*                    SKIP  compose tests require writing a file to WSL — see README
+
+[SYSTEM]
+  ~ docker_system_prune                 SKIP  skipped to avoid removing real data
